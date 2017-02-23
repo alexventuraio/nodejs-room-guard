@@ -1,0 +1,27 @@
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+.container {
+	width: 500px;
+	height: 300px;
+	/*background: lightblue;*/
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container .flx-item {
+	margin: 0px;
+	width: 90%;
+	text-align: center;
+}
+
+.icon-big {
+	color: purple;
+	font-size: 140px;
+}

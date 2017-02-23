@@ -1,0 +1,8 @@
+# NPM modules
+node_modules/
+
+# Images upload folder
+uploads/
+
+# Logs file
+npm-debug.log
