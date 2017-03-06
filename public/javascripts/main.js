@@ -3,6 +3,8 @@ $(function () {
 	// Get the HTML elements
 	var video = document.getElementById('myvideo');
 	var canvas = document.getElementById('mycanvas');
+	// Get the miliseconds to take a snapshot each
+	var timeOutParameter = document.getElementById('myTimeOutParameter').value;
 	// Get the 'canvas' context
 	var ctx = canvas.getContext('2d');
 	// 'ul' Console element
@@ -61,7 +63,7 @@ $(function () {
 			}).always(function(jqXHR, textStatus) {
 				console.log("complete", jqXHR, textStatus);
 			});
-		}, 5000);
+		}, timeOutParameter);
 	} else {
 		alert('User Media is not supported in your browser');
 	}

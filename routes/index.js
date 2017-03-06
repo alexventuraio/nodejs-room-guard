@@ -7,7 +7,27 @@ var path = require("path"),
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
-	res.render("index", { title: "Room-Guard" });
+	// Read the config file to get the miliseconds to take a snapshot
+	fs.readFile('./data.cfg',function (error, fileContent) {
+		if (error) {
+			console.log(error);
+		} else {
+			// Ensure the read parameter is a number
+			var data = parseInt(fileContent, 10);
+
+			console.log("Contenido leido: ", fileContent.toString());
+
+			if (isNaN(data)) {
+				console.log("The file paramenter was NOT a number!");
+				// if the parameter read is not a number set a default value to send to the view
+				data = 5000;
+			} else {
+				console.log("The file paramenter was a number!");
+			}
+
+			res.render("index", { title: "Room-Guard", timeOutValue: data });
+		}
+	});
 });
 
 /* GET home page. */
