@@ -10,7 +10,7 @@ router.get("/", function(req, res, next) {
 	// Read the config file to get the miliseconds to take a snapshot
 	fs.readFile('./data.cfg',function (error, fileContent) {
 		if (error) {
-			console.log(error);
+			console.log("Error al leer archivo:", error);
 		} else {
 			// Ensure the read parameter is a number
 			var data = parseInt(fileContent, 10);
@@ -96,6 +96,48 @@ router.post("/upload", function(req, res, next) {
 			console.log(err);
 		} else {
 			res.send(JSON.stringify({"status": 1, "msg": "Image Uploaded"}));
+		}
+	});
+});
+
+
+/* GET configs page. */
+router.get("/config", function(req, res, next) {
+	// Read the config file to get the miliseconds to take a snapshot
+	fs.readFile('./data.cfg',function (error, fileContent) {
+		if (error) {
+			console.log("Error al leer archivo:", error);
+		} else {
+			res.render("config", { title: "Configuraciones de Room-Guard", result: 0, actualValue: fileContent });
+		}
+	});
+});
+
+/* POST configs page. */
+router.post("/config", function(req, res, next) {
+	// Get the new value to be stored in the config file
+	var newParamTimeOut = req.body.interval_field;
+
+	// Ensure the read parameter is a number
+	var data = parseInt(newParamTimeOut, 10);
+
+	console.log("Contenido recibido del form: ", newParamTimeOut);
+
+	if (isNaN(data)) {
+		console.log("The file paramenter was NOT a number!");
+		// if the parameter read is not a number set a default value to send to the view
+		data = 5000;
+	} else {
+		console.log("The file paramenter was a number!");
+	}
+
+	// Now write the new value to the file and respond the request
+	fs.writeFile('./data.cfg', data,function (error) {
+		if (error) {
+			console.log("Error al escribir archivo:", error);
+		} else {
+			console.log("El archivo fue creado");
+			res.render("config", { title: "Configuraciones de Room-Guard", result: 1, message: "Los cambios se guardaron correctamente.", actualValue: data });
 		}
 	});
 });
